@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Redirect</title>
+</head>
+<body>
+  <p style="font-family:Segoe UI,Arial,sans-serif;padding:20px;">Redirecting to login...</p>
+  <script>
+    (async function () {
+      function normalizeBaseUrl(value) {
+        var raw = String(value || '').trim();
+        if (!raw) return '';
+        if (!/^https?:\/\//i.test(raw)) raw = 'https://' + raw;
+        try {
+          var parsed = new URL(raw);
+          if (!/^https?:$/i.test(parsed.protocol)) return '';
+          return parsed.origin;
+        } catch (_e) {
+          return '';
+        }
+      }
+      var params = new URLSearchParams(window.location.search || '');
+      var directTarget = String(params.get('target') || '').trim();
+      if (directTarget) {
+        window.location.replace(directTarget);
+        return;
+      }
+      var targetBase = '';
+      try {
+        var response = await fetch('config.json', { cache: 'no-store' });
+        if (response.ok) {
+          var config = await response.json();
+          targetBase = normalizeBaseUrl(config && config.targetBase);
+        }
+      } catch (_e) {}
+      if (!targetBase) {
+        document.body.innerHTML = '<p style="font-family:Segoe UI,Arial,sans-serif;padding:20px;color:#b3261e;">Missing targetBase in config.json.</p>';
+        return;
+      }
+      window.location.replace(targetBase + '/');
+    })();
+  </script>
+</body>
+</html>
