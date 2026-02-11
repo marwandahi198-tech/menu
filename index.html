@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Table Redirect</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #12212f;
+      --muted: #5f6d79;
+      --accent: #157347;
+      --warn: #b3261e;
+      --border: #d8dee4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: radial-gradient(circle at 15% 10%, #ffffff 0%, var(--bg) 50%, #eaf1f7 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+    .card {
+      width: min(760px, 96vw);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+      padding: 22px;
+    }
+    h1 { margin: 0 0 10px; font-size: 22px; }
+    p { margin: 0 0 10px; line-height: 1.6; }
+    .muted { color: var(--muted); }
+    .status {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      font-size: 14px;
+      word-break: break-word;
+    }
+    .ok {
+      border-color: #b7dfcc;
+      background: #eaf7f0;
+      color: var(--accent);
+    }
+    .error {
+      border-color: #efc1bc;
+      background: #fdecec;
+      color: var(--warn);
+    }
+    code {
+      background: #eef2f6;
+      border: 1px solid #d8e1ea;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    ul { margin: 10px 0 0; padding-left: 18px; }
+    li { margin: 5px 0; }
+    a { color: #0b57d0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Table Redirect</h1>
+    <p class="muted">This page redirects table links to the currently active server link.</p>
+    <div id="status" class="status">Checking redirect route...</div>
+    <div id="help" hidden>
+      <p>Supported links:</p>
+      <ul>
+        <li><code>/menu/t5</code> -> open table menu page</li>
+        <li><code>/bill/t5</code> -> open table bill page</li>
+      </ul>
+      <p class="muted">Set <code>targetBase</code> in <code>config.json</code> or pass <code>?target=...</code> in the URL.</p>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
