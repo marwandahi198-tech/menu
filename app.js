@@ -115,6 +115,13 @@
 
     var directTarget = normalizeAbsoluteUrl(search.get('target'));
     if (directTarget) {
+      try {
+        var directParsed = new URL(directTarget);
+        var rememberedBase = normalizeBaseUrl(directParsed.origin);
+        if (rememberedBase) {
+          window.localStorage.setItem('menu_redirect_target_base', rememberedBase);
+        }
+      } catch (_e) {}
       setStatus('Redirecting using direct target...', 'ok');
       if (!sameUrl(directTarget, window.location.href)) {
         window.location.replace(directTarget);
